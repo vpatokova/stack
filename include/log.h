@@ -10,7 +10,7 @@ enum File_status
     FILE_CLOSE_ADD = 2
 };
 
-FILE *logs_;
+FILE *logs;
 File_status file_status = FILE_CLOSE;
 
 void open_log_file(void);

@@ -2,9 +2,27 @@
 #define STACK_H
 
 #include "common.h"
+#include <stdio.h>
+#include <stdlib.h>
 
+const int MULTIPLE = 2;
 typedef double elem_data_t;
-#define POISON NAN
+
+ typedef struct 
+ {
+// errors info    
+    long int error_code;
+// stack info
+    int         line;
+    const char *func;
+    const char *file_name;
+    const char *stack_name;
+// dump info
+    /*int         line_call;
+    const char *func_call;
+    const char *file_name_call;*/
+
+ } stack_info;
 
  typedef struct
  {
@@ -14,30 +32,21 @@ typedef double elem_data_t;
 
     stack_info info;
 
- } stack;
+ } stack; 
 
- typedef struct 
- {
-// errors info    
-    long int number_of_errors;
-// stack info
-    int         line;
-    const char *func;
-    const char *file_name;
-    const char *stack_name;
-// dump info
-    int         line_call;
-    const char *func_call;
-    const char *file_name_call;
+void stack_ctor_      (stack *stk, size_t capacity, const char *func, int line, const char *file_name);
+void stack_push       (stack *stk, elem_data_t value);
+void stack_resize     (stack *stk);
+void stack_dtor       (stack *stk);
+void stack_add        (stack *stk);
+void stack_sub        (stack *stk);
+void stack_mult       (stack *stk);
+void stack_div        (stack *stk);
+void stack_out        (stack *stk);
+elem_data_t stack_pop (stack *stk);
 
- } stack_info;
- 
- 
-
-void stack_ctor   (stack *stk, size_t capacity);
-void stack_push   (stack *stk, elem_data_t value);
-void stack_resize (stack *stk);
-void stack_pop    (stack *stk, double *value_ptr);
-void stack_dtor   (stack *stk);
+#define POISON NAN
+#define INFO_STACK __FUNCTION__, __LINE__, __FILE__ // или лучше __func__?
+#define stack_ctor(stk, capacity) stk->info.stack_name = #stk; stack_ctor_(&stk, capacity, INFO_STACK);
 
 #endif // !STACK_H

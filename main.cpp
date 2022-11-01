@@ -5,20 +5,23 @@
 #include "include/common.h"
 #include "include/log.h"
 
-int main(void)
+int main(void) //спросить про очередность компилятор/препроцессор/компилятор?
 {
     stack stk1 = {}; //почему не надо обнулять структуры?
     const int capacity = 5; //большие или маленькие буквы?
 
-    stack_ctor(&stk1, capacity);
+    stack_ctor(stk1, capacity);
 
-    for (int count = 1; count <= capacity; count++)
+    for (unsigned int count = 1; count <= capacity; count++)
         stack_push(&stk1, count);
 
     elem_data_t value = 0;
 
-    for (int count = 1; count <= capacity; count++)
-        stack_pop(&stk1, &value);
+    for (unsigned int count = 1; count <= capacity; count++)
+    {
+        value = stack_pop(&stk1);
+        printf("%g", value);
+    }
 
     stack_dtor(&stk1);
 
