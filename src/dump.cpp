@@ -2,34 +2,65 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/debug.h"
-#include "../include/log.h"
+#include "../include/dump.h"
 #include "../include/stack.h"
+#include "../include/common.h"
+
+void open_log_file(void)
+{
+    const char *log_file_path = "../log.txt";
+
+    if (file_status == FILE_CLOSE)
+    {
+        logs = fopen(log_file_path, "w");
+
+        assert(logs != nullptr && "Could not write to log file\n");
+
+        file_status = FILE_OPEN;
+    }
+
+    if (file_status == FILE_CLOSE_ADD)
+    {
+        logs = fopen(log_file_path, "a");
+
+        assert(logs != nullptr && "Could not write to log file\n");
+
+        file_status = FILE_OPEN;
+    }
+}
+
+void close_log_file(void)
+{
+    if (file_status == FILE_OPEN)
+    {
+        fclose(logs);
+
+        file_status = FILE_CLOSE_ADD;
+    }
+}
 
 void get_errors (stack *stk)
 {
+    assert(stk != nullptr);
+    
     stk->info.error_code = 0;
 
-    if (stk == nullptr)
-        stk->info.error_code = stk->info.error_code | (1 << NULL_PTR_TO_STACK);
-
     if (stk->data == nullptr)
-        stk->info.error_code = stk->info.error_code | (1 << NULL_PTR_TO_DATA);
+        stk->info.error_code = stk->info.error_code | NULL_PTR_TO_DATA;
 
     if (stk->size > stk->capacity)
-        stk->info.error_code = stk->info.error_code | (1 << SIZE_MORE_THAN_CAPACITY);
+        stk->info.error_code = stk->info.error_code | SIZE_MORE_THAN_CAPACITY;
 
     if (stk->size < 0 || stk->capacity < 0)
-        stk->info.error_code = stk->info.error_code | (1 << SIZE_OR_CAPACITY_NEGATIVE);
+        stk->info.error_code = stk->info.error_code | SIZE_OR_CAPACITY_NEGATIVE;
 }
 
-void to_dump (stack *stk, FILE *log, const char *func, int line, const char *file_name)
+void stk_dump_release (stack *stk, FILE *log, const char *func, int line, const char *file_name)
 {
-    assert(log != nullptr && "Could not open log file\n");
-
-    /*stk->info.line_call = line;
-    stk->info.file_name_call = file_name;
-    stk->info.func_call = func;*/
+    assert(log != nullptr && "Could not write to log file\n");
+    assert(stk != nullptr);
+    assert(func != nullptr);
+    assert(file_name != nullptr);
 
     fprintf(log, "\n%s() at %s(%d)\n", func, file_name, line);
     fprintf(log, "Stack[%p]", stk);
@@ -46,7 +77,7 @@ void to_dump (stack *stk, FILE *log, const char *func, int line, const char *fil
         fprintf(log, "data [%p]\n {\n",   stk->data);
 
         for (unsigned int i = 0; i < stk->capacity; i++)
-            if (isnan(stk->data[i]))
+            if (stk->data[i] == POISON)
                 fprintf(log, "[%d] = %g (POISON)\n", i, stk->data[i]);
             else    
                 fprintf(log, "[%d] = %g \n", i, stk->data[i]);
@@ -56,42 +87,42 @@ void to_dump (stack *stk, FILE *log, const char *func, int line, const char *fil
 
     else
     {
-        printf_errors(stk, log);
+        fprint_errors(stk, log);
         fprintf(log, "size =  %u\n",     stk->size);
         fprintf(log, "capacity =  %u\n", stk->capacity);
         fprintf(log, "data [%p]\n {\n",   stk->data);
     }
 }
 
-void printf_errors (stack *stk, FILE *log)
-{
-    if ((stk->info.error_code << NULL_PTR_TO_STACK) & 1)
-    {
-        printf_error(stk, log);
-        fprintf(log, "NULL POINTER TO STACK\n");
-    }
+void fprint_errors (stack *stk, FILE *log)
+{   
+    assert(log != nullptr && "Could not write to log file");
+    assert(stk != nullptr);
 
-    if ((stk->info.error_code << NULL_PTR_TO_DATA) & 1)
+    if (stk->info.error_code & NULL_PTR_TO_DATA)
     {
-        printf_error(stk, log);
+        fprint_error(stk, log);
         fprintf(log, "NULL POINTER TO DATA\n");
     }
 
-    if ((stk->info.error_code << SIZE_MORE_THAN_CAPACITY) & 1)
+    if (stk->info.error_code & SIZE_MORE_THAN_CAPACITY)
     {
-        printf_error(stk, log);
+        fprint_error(stk, log);
         fprintf(log, "SIZE MORE THAN CAPACITY\n");
     }
 
-    if ((stk->info.error_code << SIZE_OR_CAPACITY_NEGATIVE) & 1)
+    if (stk->info.error_code & SIZE_OR_CAPACITY_NEGATIVE)
     {
-        printf_error(stk, log);
+        fprint_error(stk, log);
         fprintf(log, "SIZE OR CAPACITY IS A NEGATIVE NUMBER\n");
     }   
 }
 
-void printf_error(stack *stk, FILE *log)
+void fprint_error(stack *stk, FILE *log)
 {
+    assert(stk != nullptr);
+    assert(log != nullptr);
+
     fprintf(log, "(ERROR) \"%s\" at %s() at %s(%d)\n", stk->info.stack_name,
                                                         stk->info.func,
                                                         stk->info.file_name,

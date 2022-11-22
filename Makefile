@@ -6,5 +6,7 @@ FLAGS = -g -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-e
 		-Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel   \
 		-Wtype-limits -Wwrite-strings -D_DEBUG
 
-all:
-	$(CC) $(FLAGS) main.cpp src/stack.cpp src/log.cpp src/debug.cpp -o do.exe
+debug:
+	$(CC) $(FLAGS) main.cpp src/stack.cpp src/dump.cpp -DDEBUG -o do.exe
+release:
+	$(CC) $(FLAGS) main.cpp src/stack.cpp src/dump.cpp -DRELEASE -o do.exe

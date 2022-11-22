@@ -3,44 +3,62 @@
 #include <math.h>
 #include <assert.h>
 #include "../include/stack.h"
-#include "../include/debug.h"
+#include "../include/dump.h"
 #include "../include/common.h"
-#include "../include/log.h"
 
 static void poison_data(stack *stk);
 
-void stack_ctor_(stack *stk, size_t capacity, const char *func, int line, const char *file_name)
+#if MODE != MODE_RELEASE
+void stack_ctor_(stack *stk, int capacity, const char *func, int line, const char *file_name)
+#else
+void stack_ctor_(stack *stk, int capacity)
+#endif
 {
-    open_log_file();
+    assert(stk != nullptr);
+    assert(capacity > 0 && "Capacity is negative");
 
-    stk->info.func = func;
-    stk->info.line = line;
-    stk->info.file_name = file_name;
+    #if MODE != MODE_RELEASE
+        stk->info.func = func;
+        stk->info.line = line;
+        stk->info.file_name = file_name;
+    #endif
 
     stk->capacity = capacity;
 
     stk->size = 0;
 
-    stk->data = (elem_data_t *) calloc(stk->capacity, sizeof(elem_data_t));
+    stk->data = (stk_elem_t *) calloc(stk->capacity, sizeof(stk_elem_t));
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
-void stack_push(stack *stk, elem_data_t value)
+void stack_push(stack *stk, stk_elem_t value)
 {
+    assert(stk != nullptr);
+
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
     if (stk->size >= stk->capacity)
         stack_resize(stk);
 
     stk->data[stk->size++] = value;
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
 void stack_resize(stack *stk)
 {
+    assert(stk != nullptr);
+    
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
     if (stk->size >= stk->capacity)
         stk->capacity *= MULTIPLE;
@@ -48,124 +66,167 @@ void stack_resize(stack *stk)
     else if (stk->size + 1 == stk->capacity/MULTIPLE)
         stk->capacity /= MULTIPLE;
 
-    stk->data = (elem_data_t *) realloc(stk->data, stk->capacity * sizeof(elem_data_t));
+    stk->data = (stk_elem_t *) realloc(stk->data, stk->capacity * sizeof(stk_elem_t));
 
     poison_data(stk);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
 static void poison_data(stack *stk)
 {
-    for (unsigned int i = stk->size; i < stk->capacity; i++)
+    assert(stk != nullptr);
+
+    for (unsigned i = stk->size; i < stk->capacity; i++)
         stk->data[i] = POISON;
 }
 
 void stack_add(stack *stk)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
+    assert(stk != nullptr);
     assert(stk->size > 1 && "Not enough values in stack\n");
 
-    elem_data_t value1 = stack_pop(stk);
-    elem_data_t value2 = stack_pop(stk);
+    stk_elem_t value1 = 0;
+    stk_elem_t value2 = 0;
+
+    stack_pop(stk, &value1);
+    stack_pop(stk, &value2);
 
     stack_push(stk, value1 + value2);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
 void stack_sub(stack *stk)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
+    assert(stk != nullptr);
     assert(stk->size > 1 && "Not enough values in stack\n");
 
-    elem_data_t value1 = stack_pop(stk);
-    elem_data_t value2 = stack_pop(stk);
+    stk_elem_t value1 = 0;
+    stk_elem_t value2 = 0;
+
+    stack_pop(stk, &value1);
+    stack_pop(stk, &value2);
 
     stack_push(stk, value2 - value1);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
 void stack_mult(stack *stk)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
+    assert(stk != nullptr);
     assert(stk->size > 1 && "Not enough values in stack\n");
 
-    elem_data_t value1 = stack_pop(stk);
-    elem_data_t value2 = stack_pop(stk);
+    stk_elem_t value1 = 0;
+    stk_elem_t value2 = 0;
+
+    stack_pop(stk, &value1);
+    stack_pop(stk, &value2);
 
     stack_push(stk, value2 * value1);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
 void stack_div(stack *stk)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
+    assert(stk != nullptr);
     assert(stk->size > 1 && "Not enough values in stack\n");
 
-    elem_data_t value1 = stack_pop(stk);
-    elem_data_t value2 = stack_pop(stk);
+    stk_elem_t value1 = 0;
+    stk_elem_t value2 = 0;
+
+    stack_pop(stk, &value1);
+    stack_pop(stk, &value2);
 
     assert(value1 != 0 && "Can not divide by zero\n");
 
     stack_push(stk, value2 / value1);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 }
 
 void stack_out(stack *stk)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
-    elem_data_t value = stk->data[--stk->size];
+    assert(stk != nullptr);
+    stk_elem_t value = stk->data[--stk->size];
     
     stk->data[stk->size] = POISON;
 
     if (stk->size + 1 == stk->capacity/MULTIPLE && stk->size >= 10)
         stack_resize(stk);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
     printf("%lg", value);
 }
 
-elem_data_t stack_pop(stack *stk)
+void stack_pop(stack *stk, stk_elem_t *value_ptr)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
 
-    elem_data_t value = stk->data[--stk->size];
+    assert(stk != nullptr);
+    assert(value_ptr != nullptr);
+
+    *value_ptr = stk->data[--(stk->size)];
     
     stk->data[stk->size] = POISON;
 
     if (stk->size + 1 == stk->capacity/MULTIPLE && stk->size >= 10)
         stack_resize(stk);
 
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
-
-    return value;
+    #endif
 }
 
 
 void stack_dtor(stack *stk)
 {
+    #if MODE != MODE_RELEASE
     ASSERT(stk);
+    #endif
+
+    assert(stk != nullptr);
 
     free(stk->data);
 
     stk->data = nullptr;
     stk->capacity = -1;
     stk->size = -1;
-
-    if (file_status == FILE_OPEN)
-    {
-        fclose(logs);
-
-        file_status = FILE_CLOSE_ADD;
-    }
 }

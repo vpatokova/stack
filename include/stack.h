@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 const int MULTIPLE = 2;
-typedef double elem_data_t;
+typedef double stk_elem_t;
 
  typedef struct 
  {
@@ -26,16 +26,21 @@ typedef double elem_data_t;
 
  typedef struct
  {
-    size_t       capacity;
-    size_t       size;
-    elem_data_t *data;
+    int         capacity;
+    size_t      size;
+    stk_elem_t *data;
 
     stack_info info;
 
  } stack; 
 
-void stack_ctor_      (stack *stk, size_t capacity, const char *func, int line, const char *file_name);
-void stack_push       (stack *stk, elem_data_t value);
+#if MODE != MODE_RELEASE
+void stack_ctor_ (stack *stk, int capacity, const char *func, int line, const char *file_name);
+#else
+void stack_ctor_ (stack *stk, int capacity);
+#endif
+
+void stack_push       (stack *stk, stk_elem_t value);
 void stack_resize     (stack *stk);
 void stack_dtor       (stack *stk);
 void stack_add        (stack *stk);
@@ -43,10 +48,16 @@ void stack_sub        (stack *stk);
 void stack_mult       (stack *stk);
 void stack_div        (stack *stk);
 void stack_out        (stack *stk);
-elem_data_t stack_pop (stack *stk);
+void stack_pop (stack *stk, stk_elem_t *value_ptr);
 
-#define POISON NAN
-#define INFO_STACK __FUNCTION__, __LINE__, __FILE__ // или лучше __func__?
-#define stack_ctor(stk, capacity) stk->info.stack_name = #stk; stack_ctor_(&stk, capacity, INFO_STACK);
+#define POISON 0x77
+
+#if MODE != MODE_RELEASE
+#define INFO_STACK __FUNCTION__, __LINE__, __FILE__
+#define stack_ctor(stk, capacity) stk.info.stack_name = #stk; stack_ctor_(&stk, capacity, INFO_STACK);
+
+#else
+#define stack_ctor(stk, capacity) stack_ctor_(&stk, capacity);
+#endif
 
 #endif // !STACK_H

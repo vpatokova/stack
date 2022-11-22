@@ -1,29 +1,31 @@
 #include <stdio.h>
 #include <string.h>
 #include "include/stack.h"
-#include "include/debug.h"
+#include "include/dump.h"
 #include "include/common.h"
-#include "include/log.h"
 
-int main(void) //спросить про очередность компилятор/препроцессор/компилятор?
+int main(void)
 {
-    stack stk1 = {}; //почему не надо обнулять структуры?
-    const int capacity = 5; //большие или маленькие буквы?
+    stack stk1 = { 0 };
+    const int CAPACITY = 5;
 
-    stack_ctor(stk1, capacity);
+    open_log_file();
+    
+    stack_ctor(stk1, CAPACITY);
 
-    for (unsigned int count = 1; count <= capacity; count++)
+    for (unsigned count = 1; count <= CAPACITY; count++)
         stack_push(&stk1, count);
 
-    elem_data_t value = 0;
+    stk_elem_t value = 0;
 
-    for (unsigned int count = 1; count <= capacity; count++)
+    for (unsigned count = 1; count <= CAPACITY; count++)
     {
-        value = stack_pop(&stk1);
+        stack_pop(&stk1, &value);
         printf("%g", value);
     }
 
     stack_dtor(&stk1);
+    close_log_file();
 
     return 0;
 }
