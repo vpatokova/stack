@@ -3,7 +3,7 @@ stack_ctor_() at src/stack.cpp(35)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  0
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 0 
 [1] = 0 
@@ -16,7 +16,7 @@ stack_push() at src/stack.cpp(44)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  0
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 0 
 [1] = 0 
@@ -29,7 +29,7 @@ stack_push() at src/stack.cpp(53)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  1
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 0 
@@ -42,7 +42,7 @@ stack_push() at src/stack.cpp(44)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  1
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 0 
@@ -55,7 +55,7 @@ stack_push() at src/stack.cpp(53)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  2
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -68,7 +68,7 @@ stack_push() at src/stack.cpp(44)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  2
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -81,7 +81,7 @@ stack_push() at src/stack.cpp(53)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  3
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -94,7 +94,7 @@ stack_push() at src/stack.cpp(44)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  3
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -107,7 +107,7 @@ stack_push() at src/stack.cpp(53)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  4
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -120,7 +120,7 @@ stack_push() at src/stack.cpp(44)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  4
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -133,7 +133,7 @@ stack_push() at src/stack.cpp(53)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  5
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -146,7 +146,7 @@ stack_pop() at src/stack.cpp(91)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  5
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -159,7 +159,7 @@ stack_pop() at src/stack.cpp(105)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  4
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -172,7 +172,7 @@ stack_pop() at src/stack.cpp(91)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  4
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -185,7 +185,7 @@ stack_pop() at src/stack.cpp(105)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  3
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -198,7 +198,7 @@ stack_pop() at src/stack.cpp(91)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  3
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -211,7 +211,7 @@ stack_pop() at src/stack.cpp(105)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  2
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -224,7 +224,7 @@ stack_pop() at src/stack.cpp(91)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  2
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 2 
@@ -237,7 +237,7 @@ stack_pop() at src/stack.cpp(105)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  1
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 119 (POISON)
@@ -250,7 +250,7 @@ stack_pop() at src/stack.cpp(91)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  1
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 1 
 [1] = 119 (POISON)
@@ -263,7 +263,7 @@ stack_pop() at src/stack.cpp(105)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  0
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 119 (POISON)
 [1] = 119 (POISON)
@@ -276,7 +276,7 @@ stack_dtor() at src/stack.cpp(112)
 Stack[0060FED8](ok) "stk1" at main() at main.cpp(14)
 size =  0
 capacity =  5
-data [00EA22A0]
+data [001E22A0]
  {
 [0] = 119 (POISON)
 [1] = 119 (POISON)

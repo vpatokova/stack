@@ -6,7 +6,7 @@
 #include "../include/stack.h"
 #include "../include/config.h"
 
-FILE *log = NULL;
+FILE *logs = NULL;
 
 void fprint_errors(stack *stk, int error_code);
 void fprint_error (stack *stk);
@@ -59,19 +59,19 @@ void fprint_errors (stack *stk, int error_code)
     if (error_code & NULL_PTR_TO_DATA)
     {
         fprint_error(stk);
-        fprintf(log, "NULL POINTER TO DATA\n");
+        fprintf(logs, "NULL POINTER TO DATA\n");
     }
 
     if (error_code & SIZE_MORE_THAN_CAPACITY)
     {
         fprint_error(stk);
-        fprintf(log, "SIZE MORE THAN CAPACITY\n");
+        fprintf(logs, "SIZE MORE THAN CAPACITY\n");
     }
 
     if (error_code & SIZE_OR_CAPACITY_NEGATIVE)
     {
         fprint_error(stk);
-        fprintf(log, "SIZE OR CAPACITY IS A NEGATIVE NUMBER\n");
+        fprintf(logs, "SIZE OR CAPACITY IS A NEGATIVE NUMBER\n");
     }   
 }
 
@@ -79,7 +79,7 @@ void fprint_error(stack *stk)
 {
     assert(stk != nullptr);
 
-    fprintf(log, "(ERROR) \"%s\" at %s() at %s(%d)\n", stk->info.stack_name,
+    fprintf(logs, "(ERROR) \"%s\" at %s() at %s(%d)\n", stk->info.stack_name,
                                                        stk->info.func,
                                                        stk->info.file_name,
                                                        stk->info.line);
@@ -89,12 +89,12 @@ void open_log_file(void)
 {
     const char *const LOG_FILE_PATH = "./log.txt";
 
-    log = fopen(LOG_FILE_PATH, "w");
+    logs = fopen(LOG_FILE_PATH, "w");
 
-    assert(log != nullptr && "Could not write to log file\n");
+    assert(logs != nullptr && "Could not write to log file\n");
 }
 
 void close_log_file(void)
 {
-    fclose(log);
+    fclose(logs);
 }
