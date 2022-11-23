@@ -27,21 +27,21 @@ typedef double stk_elem_t;
 
  } stack; 
 
-#ifdef DEBUG
-void stack_ctor_ (stack *stk, int capacity, const char *func, int line, const char *file_name);
+#ifdef MODE_DEBUG
+    void stack_ctor_   (stack *stk, int capacity, const char *func, int line, const char *file_name);
+    int collect_errors (stack *stk);
 #else
-void stack_ctor_ (stack *stk, int capacity);
+    void stack_ctor_   (stack *stk, int capacity);
 #endif
 
 void stack_push    (stack *stk, stk_elem_t value);
 void stack_pop     (stack *stk, stk_elem_t *value_ptr);
 void stack_resize  (stack *stk);
 void stack_dtor    (stack *stk);
-int collect_errors (stack *stk);
 
 #define POISON 0x77
 
-#ifdef DEBUG
+#ifdef MODE_DEBUG
     #define INFO_STACK __FUNCTION__, __LINE__, __FILE__
     #define stack_ctor(stk, capacity) {stk.info.stack_name = #stk; stack_ctor_(&stk, capacity, INFO_STACK);}
 

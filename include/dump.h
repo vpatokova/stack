@@ -1,3 +1,5 @@
+#ifdef MODE_DEBUG
+
 #ifndef DUMP_H
 #define DUMP_H
 
@@ -17,3 +19,5 @@ void close_log_file (void);
 void stk_dump(stack *stk, FILE *log, const char *func, int line, const char *file_name);
 
 #endif // !DUMP_H
+
+#endif // MODE_DEBUG

@@ -9,7 +9,9 @@ int main(void)
     stack stk1 = { 0 };
     const int CAPACITY = 5;
 
-    open_log_file();
+    #ifdef MODE_DEBUG
+        open_log_file();
+    #endif
     
     stack_ctor(stk1, CAPACITY);
 
@@ -25,7 +27,10 @@ int main(void)
     }
 
     stack_dtor(&stk1);
-    close_log_file();
+    
+    #ifdef MODE_DEBUG
+        close_log_file();
+    #endif
 
     return 0;
 }

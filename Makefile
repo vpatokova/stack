@@ -7,9 +7,9 @@ FLAGS = -g -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-e
 		-Wtype-limits -Wwrite-strings -D_DEBUG
 
 debug:
-	$(CC) $(FLAGS) main.cpp src/stack.cpp src/dump.cpp -DDEBUG -o stack.exe
+	$(CC) $(FLAGS) main.cpp src/stack.cpp src/dump.cpp -DMODE_DEBUG -o stack.exe
 release:
-	$(CC) $(FLAGS) main.cpp src/stack.cpp src/dump.cpp -DRELEASE -o stack.exe
+	$(CC) $(FLAGS) main.cpp src/stack.cpp -DMODE_RELEASE -o stack.exe
 
 clean:
 	rm -rf stack.exe log.txt
