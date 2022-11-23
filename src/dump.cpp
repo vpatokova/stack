@@ -6,10 +6,10 @@
 #include "../include/stack.h"
 #include "../include/config.h"
 
-FILE *logs = NULL;
+FILE *log = NULL;
 
-void fprint_errors(stack *stk, int error_code, FILE *log);
-void fprint_error (stack *stk, FILE *log);
+void fprint_errors(stack *stk, int error_code);
+void fprint_error (stack *stk);
 
 void stk_dump (stack *stk, FILE *log, const char *func, int line, const char *file_name)
 {
@@ -45,51 +45,37 @@ void stk_dump (stack *stk, FILE *log, const char *func, int line, const char *fi
 
     else
     {
-        fprint_errors(stk, error_code, log);
+        fprint_errors(stk, error_code);
         fprintf(log, "size =  %u\n",     stk->size);
         fprintf(log, "capacity =  %u\n", stk->capacity);
         fprintf(log, "data [%p]\n {\n",   stk->data);
     }
 }
 
-void open_log_file(void)
-{
-    const char *const LOG_FILE_PATH = "./log.txt";
-
-    logs = fopen(LOG_FILE_PATH, "w");
-
-    assert(logs != nullptr && "Could not write to log file\n");
-}
-
-void close_log_file(void)
-{
-    fclose(logs);
-}
-
-void fprint_errors (stack *stk, int error_code, FILE *log)
+void fprint_errors (stack *stk, int error_code)
 {   
     assert(stk != nullptr);
 
     if (error_code & NULL_PTR_TO_DATA)
     {
-        fprint_error(stk, log);
+        fprint_error(stk);
         fprintf(log, "NULL POINTER TO DATA\n");
     }
 
     if (error_code & SIZE_MORE_THAN_CAPACITY)
     {
-        fprint_error(stk, log);
+        fprint_error(stk);
         fprintf(log, "SIZE MORE THAN CAPACITY\n");
     }
 
     if (error_code & SIZE_OR_CAPACITY_NEGATIVE)
     {
-        fprint_error(stk, log);
+        fprint_error(stk);
         fprintf(log, "SIZE OR CAPACITY IS A NEGATIVE NUMBER\n");
     }   
 }
 
-void fprint_error(stack *stk, FILE *log)
+void fprint_error(stack *stk)
 {
     assert(stk != nullptr);
 
@@ -97,4 +83,18 @@ void fprint_error(stack *stk, FILE *log)
                                                        stk->info.func,
                                                        stk->info.file_name,
                                                        stk->info.line);
+}
+
+void open_log_file(void)
+{
+    const char *const LOG_FILE_PATH = "./log.txt";
+
+    log = fopen(LOG_FILE_PATH, "w");
+
+    assert(log != nullptr && "Could not write to log file\n");
+}
+
+void close_log_file(void)
+{
+    fclose(log);
 }
