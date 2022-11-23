@@ -32,7 +32,7 @@ void stack_ctor_(stack *stk, int capacity)
     assert(stk->data != nullptr && "Null pointer to data");
 
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 }
 
@@ -41,7 +41,7 @@ void stack_push(stack *stk, stk_elem_t value)
     assert(stk != nullptr);
 
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 
     if (stk->size >= stk->capacity)
@@ -50,7 +50,7 @@ void stack_push(stack *stk, stk_elem_t value)
     stk->data[stk->size++] = value;
 
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 }
 
@@ -59,7 +59,7 @@ void stack_resize(stack *stk)
     assert(stk != nullptr);
     
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 
     if (stk->size >= stk->capacity)
@@ -73,7 +73,7 @@ void stack_resize(stack *stk)
     poison_data(stk);
 
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 }
 
@@ -88,7 +88,7 @@ static void poison_data(stack *stk)
 void stack_pop(stack *stk, stk_elem_t *value_ptr)
 {
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 
     assert(stk != nullptr);
@@ -102,14 +102,14 @@ void stack_pop(stack *stk, stk_elem_t *value_ptr)
         stack_resize(stk);
 
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 }
 
 void stack_dtor(stack *stk)
 {
     #ifdef DEBUG
-    STK_DUMP(stk);
+        STK_DUMP(stk);
     #endif
 
     assert(stk != nullptr);

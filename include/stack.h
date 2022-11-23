@@ -33,11 +33,11 @@ void stack_ctor_ (stack *stk, int capacity, const char *func, int line, const ch
 void stack_ctor_ (stack *stk, int capacity);
 #endif
 
-void stack_push   (stack *stk, stk_elem_t value);
-void stack_pop    (stack *stk, stk_elem_t *value_ptr);
-void stack_resize (stack *stk);
-void stack_dtor   (stack *stk);
-int collect_errors   (stack *stk);
+void stack_push    (stack *stk, stk_elem_t value);
+void stack_pop     (stack *stk, stk_elem_t *value_ptr);
+void stack_resize  (stack *stk);
+void stack_dtor    (stack *stk);
+int collect_errors (stack *stk);
 
 #define POISON 0x77
 

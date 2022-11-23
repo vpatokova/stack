@@ -8,14 +8,14 @@
 
 FILE *logs = NULL;
 
-void fprint_errors(stack *stk, int error_code);
-void fprint_error (stack *stk);
+void fprint_errors (stack *stk, int error_code);
+void fprint_error  (stack *stk);
 
 void stk_dump (stack *stk, FILE *log, const char *func, int line, const char *file_name)
 {
-    assert(log != nullptr && "Could not write to log file\n");
-    assert(stk != nullptr);
-    assert(func != nullptr);
+    assert(log       != nullptr && "Could not write to log file\n");
+    assert(stk       != nullptr);
+    assert(func      != nullptr);
     assert(file_name != nullptr);
 
     int error_code = collect_errors(stk);
@@ -32,7 +32,7 @@ void stk_dump (stack *stk, FILE *log, const char *func, int line, const char *fi
 
         fprintf(log, "size =  %u\n",     stk->size);
         fprintf(log, "capacity =  %u\n", stk->capacity);
-        fprintf(log, "data [%p]\n {\n",   stk->data);
+        fprintf(log, "data [%p]\n {\n",  stk->data);
 
         for (unsigned i = 0; i < stk->capacity; i++)
             if (stk->data[i] == POISON)
@@ -46,9 +46,10 @@ void stk_dump (stack *stk, FILE *log, const char *func, int line, const char *fi
     else
     {
         fprint_errors(stk, error_code);
+
         fprintf(log, "size =  %u\n",     stk->size);
         fprintf(log, "capacity =  %u\n", stk->capacity);
-        fprintf(log, "data [%p]\n {\n",   stk->data);
+        fprintf(log, "data [%p]\n {\n",  stk->data);
     }
 }
 
@@ -80,9 +81,9 @@ void fprint_error(stack *stk)
     assert(stk != nullptr);
 
     fprintf(logs, "(ERROR) \"%s\" at %s() at %s(%d)\n", stk->info.stack_name,
-                                                       stk->info.func,
-                                                       stk->info.file_name,
-                                                       stk->info.line);
+                                                        stk->info.func,
+                                                        stk->info.file_name,
+                                                        stk->info.line);
 }
 
 void open_log_file(void)
