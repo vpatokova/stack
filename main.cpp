@@ -2,7 +2,7 @@
 #include <string.h>
 #include "include/stack.h"
 #include "include/dump.h"
-#include "include/common.h"
+#include "include/config.h"
 
 int main(void)
 {
